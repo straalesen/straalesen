@@ -1,4 +1,3 @@
-
 <?php    /* Eksempel 1 */
 /*
 /*    Programmet mottar fra et HTML-skjema et fornavn og et etternavn ved POST-metoden
