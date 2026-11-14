@@ -11,3 +11,4 @@ foreach (getenv() as $navn => $verdi) {
         echo $navn . "\n";
     }
 }
+echo "\nMySQLi: " . (extension_loaded("mysqli") ? "Ja" : "Nei") . "\n";
