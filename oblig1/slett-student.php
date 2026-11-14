@@ -13,23 +13,24 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $sporring = $db->prepare(
                 "DELETE FROM student WHERE brukernavn = ?"
             );
-            $sporring->execute([$brukernavn]);
+            $sporring->bind_param("s", $brukernavn);
+            $sporring->execute();
 
-            if ($sporring->rowCount() > 0) {
+            if ($sporring->affected_rows > 0) {
                 $melding = "Studenten er slettet.";
             } else {
                 $melding = "Studenten finnes ikke lenger.";
             }
-        } catch (PDOException $e) {
+        } catch (mysqli_sql_exception $e) {
             $melding = "Kunne ikke slette studenten.";
         }
     }
 }
 
-$sporring = $db->query(
+$resultat = $db->query(
     "SELECT * FROM student ORDER BY etternavn, fornavn, brukernavn"
 );
-$studenter = $sporring->fetchAll(PDO::FETCH_ASSOC);
+$studenter = $resultat->fetch_all(MYSQLI_ASSOC);
 ?>
 <!DOCTYPE html>
 <html lang="nb">

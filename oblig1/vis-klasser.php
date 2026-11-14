@@ -1,8 +1,8 @@
 <?php
 require "db.php";
 
-$sporring = $db->query("SELECT * FROM klasse ORDER BY klassekode");
-$klasser = $sporring->fetchAll(PDO::FETCH_ASSOC);
+$resultat = $db->query("SELECT * FROM klasse ORDER BY klassekode");
+$klasser = $resultat->fetch_all(MYSQLI_ASSOC);
 ?>
 <!DOCTYPE html>
 <html lang="nb">

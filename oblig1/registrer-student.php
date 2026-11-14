@@ -28,17 +28,20 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     VALUES (?, ?, ?, ?)";
 
             $sporring = $db->prepare($sql);
-            $sporring->execute([
-                $brukernavn, $fornavn, $etternavn, $klassekode
-            ]);
+            $sporring->bind_param(
+                "ssss",
+                $brukernavn,
+                $fornavn,
+                $etternavn,
+                $klassekode
+            );
+            $sporring->execute();
 
             $melding = "Studenten er registrert!";
-        } catch (PDOException $e) {
-            $feilkode = $e->errorInfo[1] ?? null;
-
-            if ($feilkode === 1062) {
+        } catch (mysqli_sql_exception $e) {
+            if ($e->getCode() === 1062) {
                 $melding = "Brukernavnet finnes allerede. Velg et annet.";
-            } elseif ($feilkode === 1452) {
+            } elseif ($e->getCode() === 1452) {
                 $melding = "Klassen finnes ikke. Velg en gyldig klasse.";
             } else {
                 $melding = "Kunne ikke registrere studenten.";
@@ -47,8 +50,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
 }
 
-$sporring = $db->query("SELECT * FROM klasse ORDER BY klassekode");
-$klasser = $sporring->fetchAll(PDO::FETCH_ASSOC);
+$resultat = $db->query("SELECT * FROM klasse ORDER BY klassekode");
+$klasser = $resultat->fetch_all(MYSQLI_ASSOC);
 ?>
 <!DOCTYPE html>
 <html lang="nb">

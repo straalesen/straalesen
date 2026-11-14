@@ -13,15 +13,16 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $sporring = $db->prepare(
                 "DELETE FROM klasse WHERE klassekode = ?"
             );
-            $sporring->execute([$klassekode]);
+            $sporring->bind_param("s", $klassekode);
+            $sporring->execute();
 
-            if ($sporring->rowCount() > 0) {
+            if ($sporring->affected_rows > 0) {
                 $melding = "Klassen er slettet.";
             } else {
                 $melding = "Klassen finnes ikke lenger.";
             }
-        } catch (PDOException $e) {
-            if (($e->errorInfo[1] ?? null) === 1451) {
+        } catch (mysqli_sql_exception $e) {
+            if ($e->getCode() === 1451) {
                 $melding = "Klassen kan ikke slettes fordi den har studenter.";
             } else {
                 $melding = "Kunne ikke slette klassen.";
@@ -30,10 +31,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
 }
 
-$sporring = $db->query(
-    "SELECT * FROM klasse ORDER BY klassekode"
-);
-$klasser = $sporring->fetchAll(PDO::FETCH_ASSOC);
+$resultat = $db->query("SELECT * FROM klasse ORDER BY klassekode");
+$klasser = $resultat->fetch_all(MYSQLI_ASSOC);
 ?>
 <!DOCTYPE html>
 <html lang="nb">

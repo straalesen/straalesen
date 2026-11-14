@@ -1,17 +1,18 @@
 <?php
-$vert = "127.0.0.1";
-$database = "prg120_oblig1";
-$bruker = "root";
-$passord = "";
+mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+
+$vert = getenv("DB_HOST");
+$database = getenv("DB_DATABASE");
+$bruker = getenv("DB_USER");
+$passord = getenv("DB_PASSWORD");
+
+if (!$vert || !$database || !$bruker || $passord === false) {
+    exit("Databaseinnstillingene mangler på serveren.");
+}
 
 try {
-    $db = new PDO(
-        "mysql:host=$vert;dbname=$database;charset=utf8mb4",
-        $bruker,
-        $passord
-    );
-
-    $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch (PDOException $e) {
+    $db = new mysqli($vert, $bruker, $passord, $database);
+    $db->set_charset("utf8mb4");
+} catch (mysqli_sql_exception $e) {
     exit("Kunne ikke koble til databasen.");
 }

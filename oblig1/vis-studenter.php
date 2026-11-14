@@ -1,10 +1,10 @@
 <?php
 require "db.php";
 
-$sporring = $db->query(
+$resultat = $db->query(
     "SELECT * FROM student ORDER BY etternavn, fornavn, brukernavn"
 );
-$studenter = $sporring->fetchAll(PDO::FETCH_ASSOC);
+$studenter = $resultat->fetch_all(MYSQLI_ASSOC);
 ?>
 <!DOCTYPE html>
 <html lang="nb">

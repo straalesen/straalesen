@@ -23,11 +23,17 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     VALUES (?, ?, ?)";
 
             $sporring = $db->prepare($sql);
-            $sporring->execute([$klassekode, $klassenavn, $studiumkode]);
+            $sporring->bind_param(
+                "sss",
+                $klassekode,
+                $klassenavn,
+                $studiumkode
+            );
+            $sporring->execute();
 
             $melding = "Klassen er registrert!";
-        } catch (PDOException $e) {
-            if (($e->errorInfo[1] ?? null) === 1062) {
+        } catch (mysqli_sql_exception $e) {
+            if ($e->getCode() === 1062) {
                 $melding = "Klassekoden finnes allerede. Velg en annen.";
             } else {
                 $melding = "Kunne ikke registrere klassen.";
