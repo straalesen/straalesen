@@ -66,7 +66,7 @@ $klasser = $resultat->fetch_all(MYSQLI_ASSOC);
 
     <?php if (empty($klasser)): ?>
         <p>Du må registrere en klasse før du kan registrere studenter.</p>
-        <p><a href="registrer-klasse.php">Registrer klasse</a></p>
+        <p><a href="/app/sosta8553-straalesen/oblig1/registrer-klasse.php">Registrer klasse</a></p>
     <?php else: ?>
         <form method="post">
             <p>
@@ -111,6 +111,6 @@ $klasser = $resultat->fetch_all(MYSQLI_ASSOC);
         </form>
     <?php endif; ?>
 
-    <p><a href="index.php">Tilbake til menyen</a></p>
+    <p><a href="/app/sosta8553-straalesen/oblig1/index.php">Tilbake til menyen</a></p>
 </body>
 </html>

@@ -33,6 +33,6 @@ $klasser = $resultat->fetch_all(MYSQLI_ASSOC);
         </table>
     <?php endif; ?>
 
-    <p><a href="index.php">Tilbake til menyen</a></p>
+    <p><a href="/app/sosta8553-straalesen/oblig1/index.php">Tilbake til menyen</a></p>
 </body>
 </html>

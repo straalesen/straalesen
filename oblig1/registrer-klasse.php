@@ -75,6 +75,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         <button type="submit">Registrer klasse</button>
     </form>
 
-    <p><a href="index.php">Tilbake til menyen</a></p>
+    <p><a href="/app/sosta8553-straalesen/oblig1/index.php">Tilbake til menyen</a></p>
 </body>
 </html>
